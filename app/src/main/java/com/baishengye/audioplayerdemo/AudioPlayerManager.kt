@@ -7,7 +7,10 @@ import android.content.ServiceConnection
 import android.media.AudioManager
 import android.os.IBinder
 import android.util.Log
+import android.util.SparseArray
 import android.widget.Toast
+import androidx.core.util.isEmpty
+import androidx.core.util.isNotEmpty
 import java.time.Duration
 import java.time.LocalDate
 import java.util.ArrayDeque
@@ -48,7 +51,7 @@ class AudioPlayerManager(context: Context) :AudioPlayerListener,AudioFocusListen
     }
 
     private var mCurrAudioUrl:String?=null
-    private val mAudioUrls:ArrayDeque<String> = ArrayDeque<String>()
+    private val mAudioUrls:SparseArray<String> = SparseArray<String>()
 
     init {
         mAppContext = context.applicationContext
@@ -60,25 +63,17 @@ class AudioPlayerManager(context: Context) :AudioPlayerListener,AudioFocusListen
      * 重置播放列表，并且填充新的播放列表*/
     fun playUrlsReset(urls:List<String>){
         mAudioUrls.clear()
-        mAudioUrls.addAll(urls)
-        playAudio(true)
-    }
-
-    /**
-     * 将要播放的音频插入在列表头部*/
-    fun playUrlsAddHead(urls:List<String>){
-        urls.reversed().forEach {
-            mAudioUrls.addFirst(it)
-        }
-        playAudio(true)
-    }
-
-    /**
-     * 将要播放的音频插入列表的尾部*/
-    fun playUrlsAddLast(urls:List<String>){
         urls.forEach {
-            mAudioUrls.addLast(it)
+            mAudioUrls.put(it.hashCode(),it)
         }
+        playAudio(true)
+    }
+
+    /**
+     * 重置播放列表，并且填充新的播放列表*/
+    fun playUrlsReset(url:String){
+        mAudioUrls.clear()
+        mAudioUrls.put(url.hashCode(),url)
         playAudio(true)
     }
 
@@ -104,7 +99,10 @@ class AudioPlayerManager(context: Context) :AudioPlayerListener,AudioFocusListen
                 mCurrAudioUrl = null
                 return
             }
-            mCurrAudioUrl = mAudioUrls.poll()
+
+            //获取第一个并移除确保列表中只有没播放过的
+            mCurrAudioUrl = mAudioUrls.valueAt(0)
+            mAudioUrls.removeAt(0)
         }
 
         //服务如果还没有绑定的话先绑定服务

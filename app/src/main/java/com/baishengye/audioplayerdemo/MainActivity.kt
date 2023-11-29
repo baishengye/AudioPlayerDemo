@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
             AudioPlayerManager.getInstance().playUrlsReset(
                 listOf(
 "http://www.170mv.com/kw/antiserver.kuwo.cn/anti.s?rid=MUSIC_93477122&response=res&format=mp3|aac&type=convert_url&br=128kmp3&agent=iPhone&callback=getlink&jpcallback=getlink.mp3",
-                    "http://music.163.com/song/media/outer/url?id=447925558.mp3"
+                    "http://music.163.com/song/media/outer/url?id=447925558.mp3",
+                "http://www.170mv.com/kw/antiserver.kuwo.cn/anti.s?rid=MUSIC_93477122&response=res&format=mp3|aac&type=convert_url&br=128kmp3&agent=iPhone&callback=getlink&jpcallback=getlink.mp3"
                 )
             )
 //                    "https://m704.music.126.net/20231129152242/9b3aa0be8e21725f2a7160bfba1c4c96/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/27185780744/d54e/a772/0d50/d0ce130013e19d1f83404f7f8dcfd5e0.mp3",
