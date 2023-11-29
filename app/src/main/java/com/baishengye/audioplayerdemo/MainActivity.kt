@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnPlay).setOnClickListener {
             AudioPlayerManager.getInstance().playUrlsReset(
                 listOf(
-"http://www.170mv.com/kw/antiserver.kuwo.cn/anti.s?rid=MUSIC_93477122&response=res&format=mp3|aac&type=convert_url&br=128kmp3&agent=iPhone&callback=getlink&jpcallback=getlink.mp3",
                     "http://music.163.com/song/media/outer/url?id=447925558.mp3",
                 "http://www.170mv.com/kw/antiserver.kuwo.cn/anti.s?rid=MUSIC_93477122&response=res&format=mp3|aac&type=convert_url&br=128kmp3&agent=iPhone&callback=getlink&jpcallback=getlink.mp3"
                 )

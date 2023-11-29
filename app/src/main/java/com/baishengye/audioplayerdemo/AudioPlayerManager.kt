@@ -14,6 +14,8 @@ import androidx.core.util.isNotEmpty
 import java.time.Duration
 import java.time.LocalDate
 import java.util.ArrayDeque
+import java.util.TreeMap
+import java.util.TreeSet
 
 class AudioPlayerManager(context: Context) :AudioPlayerListener,AudioFocusListener {
 
@@ -51,7 +53,7 @@ class AudioPlayerManager(context: Context) :AudioPlayerListener,AudioFocusListen
     }
 
     private var mCurrAudioUrl:String?=null
-    private val mAudioUrls:SparseArray<String> = SparseArray<String>()
+    private val mAudioUrls:TreeSet<String> = TreeSet<String>()
 
     init {
         mAppContext = context.applicationContext
@@ -63,9 +65,7 @@ class AudioPlayerManager(context: Context) :AudioPlayerListener,AudioFocusListen
      * 重置播放列表，并且填充新的播放列表*/
     fun playUrlsReset(urls:List<String>){
         mAudioUrls.clear()
-        urls.forEach {
-            mAudioUrls.put(it.hashCode(),it)
-        }
+        mAudioUrls.addAll(urls)
         playAudio(true)
     }
 
@@ -73,7 +73,7 @@ class AudioPlayerManager(context: Context) :AudioPlayerListener,AudioFocusListen
      * 重置播放列表，并且填充新的播放列表*/
     fun playUrlsReset(url:String){
         mAudioUrls.clear()
-        mAudioUrls.put(url.hashCode(),url)
+        mAudioUrls.add(url)
         playAudio(true)
     }
 
@@ -101,8 +101,7 @@ class AudioPlayerManager(context: Context) :AudioPlayerListener,AudioFocusListen
             }
 
             //获取第一个并移除确保列表中只有没播放过的
-            mCurrAudioUrl = mAudioUrls.valueAt(0)
-            mAudioUrls.removeAt(0)
+            mCurrAudioUrl = mAudioUrls.pollFirst()
         }
 
         //服务如果还没有绑定的话先绑定服务
